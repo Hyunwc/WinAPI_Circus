@@ -1,5 +1,9 @@
 #include "BitMap.h"
 
+BitMap::BitMap()
+{
+}
+
 void BitMap::Init(HDC hdc, char* FileName)
 {
 	MemDC = CreateCompatibleDC(hdc);
@@ -11,10 +15,14 @@ void BitMap::Init(HDC hdc, char* FileName)
 	m_Size.cy = BitMap_Info.bmHeight;
 }
 
-BitMap::BitMap()
+void BitMap::Draw(HDC hdc, int x, int y)
 {
+	StretchBlt(hdc, x, y, 100, 150, MemDC, 0, 0, m_Size.cx, m_Size.cy, SRCCOPY);
 }
+
 
 BitMap::~BitMap()
 {
+	DeleteObject(m_BitMap);
+	DeleteDC(MemDC);
 }

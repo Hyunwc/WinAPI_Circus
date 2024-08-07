@@ -9,6 +9,13 @@ private:
 	static GameManager* instance;
 	HWND m_hWnd;
 	HDC m_hdc;
+	HDC backDC;
+	int width, height;
+	//되는지 테스트부터
+	BitMap* audience;
+	BitMap* elephant;
+	BitMap* grass;
+	//RECT backRect;
 	float g_nX = 0;
 	GameManager(){}
 public:
@@ -26,7 +33,9 @@ public:
 			instance = nullptr;
 		}
 	}
+
 	void Init(HWND hWnd, HDC hdc);
 	void Update(float deltaTime);
+	void TestDraw();
 	void Draw();
 };

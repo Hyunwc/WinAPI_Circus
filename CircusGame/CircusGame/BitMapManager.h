@@ -5,7 +5,8 @@ class BitMapManager
 {
 private:
 	static BitMapManager* m_hThis;
-	BitMap m_back;
+	BitMap* m_back;
+	//vector<BitMap> m_back;
 
 	BitMapManager();
 public:
@@ -26,5 +27,7 @@ public:
 		}
 	}
 	void Init(HDC hdc);
+	BitMap* GetImage(IMAGE index) { return &m_back[index]; }
+
 	~BitMapManager();
 };

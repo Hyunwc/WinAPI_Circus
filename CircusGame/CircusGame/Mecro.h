@@ -3,4 +3,18 @@
 #include <time.h>
 #include <vector>
 #include <Windows.h>
+#include <string>
+#pragma comment(lib, "msimg32.lib")
 
+using namespace std;
+
+enum IMAGE
+{
+	IMAGE_START,
+
+	IMAGE_GRASS = 1,
+	IMAGE_ELEPHANT,
+	IMAGE_AUDIENCE,
+
+	IMAGE_END
+};

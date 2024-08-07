@@ -3,8 +3,10 @@
 
 #include "framework.h"
 #include "CircusGame.h"
+#include "GameManager.h"
 
 #pragma comment(lib, "msimg32.lib")
+
 
 #define MAX_LOADSTRING 100
 
@@ -47,11 +49,13 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     ShowWindow(hWnd, nCmdShow);
     UpdateWindow(hWnd);
 
-    audience = (HBITMAP)LoadImage(NULL, L"RES//back_3.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
+  /*  audience = (HBITMAP)LoadImage(NULL, L"RES//back_3.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
     elephant = (HBITMAP)LoadImage(NULL, L"RES//back_2.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
-    grass = (HBITMAP)LoadImage(NULL, L"RES//back_1.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
+    grass = (HBITMAP)LoadImage(NULL, L"RES//back_1.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);*/
 
     HDC hdc = GetDC(hWnd);
+
+    GameManager::Instance()->Init(hWnd, hdc);
 
     ULONGLONG FPS = 30; //Frame Per Seconds
     //1초에 몇번 갱신할것인지를 위한 계산
@@ -83,6 +87,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                 float deltaTime = (currentTime - checkTime + invFPS) * 0.001f;
                 checkTime += invFPS;
 
+                GameManager::Instance()->Update(deltaTime);
+                GameManager::Instance()->Draw();
+                //GameManager::Instance()->TestDraw();
+
                 /* timer += deltaTime;
                  TextOutA(hdc,0,0,std::to_string(timer).c_str(), std::to_string(timer).length());*/
 
@@ -96,20 +104,21 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                  }*/
 
                  //현재시간 기준으로 X포지션 -
-                g_nX1 -= 100 * deltaTime;
+                //g_nX1 -= 100 * deltaTime;
 
-                //포지션이 -몇까지 도달시 800으로
-                if (g_nX1 <= -800) g_nX1 += 800;
+                ////포지션이 -몇까지 도달시 800으로
+                //if (g_nX1 <= -800) g_nX1 += 800;
 
-                Draw(hWnd, hdc);
+                //Draw(hWnd, hdc);
             }
         }
     }
 
-    DeleteObject(audience);
+    /*DeleteObject(audience);
     DeleteObject(elephant);
-    DeleteObject(grass);
+    DeleteObject(grass);*/
     ReleaseDC(hWnd, hdc);
+    GameManager::Release();
 
     return (int)msg.wParam;
 }

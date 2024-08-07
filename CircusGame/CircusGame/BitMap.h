@@ -1,7 +1,6 @@
 #pragma once
 #include "Mecro.h"
 
-
 class BitMap
 {
 private:
@@ -12,6 +11,7 @@ private:
 public:
 
 	void Init(HDC hdc, char* FileName);
+	void Draw(HDC hdc, int x, int y);
 	inline SIZE GetSize()
 	{
 		return m_Size;
