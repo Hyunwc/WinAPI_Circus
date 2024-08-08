@@ -110,6 +110,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                 //if (g_nX1 <= -800) g_nX1 += 800;
 
                 //Draw(hWnd, hdc);
+
+                /*InvalidateRect(hWnd, NULL, FALSE);
+                UpdateWindow(hWnd);*/
             }
         }
     }

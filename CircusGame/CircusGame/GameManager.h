@@ -38,4 +38,5 @@ public:
 	void Update(float deltaTime);
 	void TestDraw();
 	void Draw();
+	HBITMAP MyCreateDIBSection(HDC hdc, int w, int h);
 };

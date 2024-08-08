@@ -27,6 +27,8 @@ void GameManager::Update(float deltaTime)
 
 	//포지션이 -몇까지 도달시 800으로
 	if (g_nX <= -800) g_nX += 800;
+
+	InvalidateRect(m_hWnd, NULL, FALSE);
 }
 
 void GameManager::TestDraw()
@@ -39,6 +41,7 @@ void GameManager::TestDraw()
 void GameManager::Draw()
 {
 	HBITMAP backBitmap = CreateCompatibleBitmap(m_hdc, width, height);
+	//HBITMAP backBitmap = MyCreateDIBSection(m_hdc, width, height);
 	SelectObject(backDC, backBitmap);
 
 	HDC memDC = CreateCompatibleDC(m_hdc);
@@ -48,23 +51,29 @@ void GameManager::Draw()
 	//관객부터
 	for (int i = 0; i < 7; i++)
 	{
-		StretchBlt(backDC, g_nX + i * 100, 100, 230, 300, memDC, 0, 0, 145, 245, SRCCOPY);
+		audience->Draw(backDC, g_nX + i * 100, 100, 230, 300);
+		//StretchBlt(backDC, g_nX + i * 100, 100, 230, 300, memDC, 0, 0, 145, 245, SRCCOPY);
 	}
+	SelectObject(memDC, elephant);
 	//코끼리로 변경
-	oldBitmap = (HBITMAP)SelectObject(memDC, elephant);
-	StretchBlt(backDC, g_nX + 7 * 100, 100, 230, 300, memDC, 0, 0, 145, 245, SRCCOPY);
-
-	oldBitmap = (HBITMAP)SelectObject(memDC, audience);
+	//oldBitmap = (HBITMAP)SelectObject(memDC, elephant);
+	//StretchBlt(backDC, g_nX + 7 * 100, 100, 230, 300, memDC, 0, 0, 145, 245, SRCCOPY);
+	elephant->Draw(backDC, g_nX + 7 * 100, 100, 230, 300);
+	SelectObject(memDC, audience);
+	//oldBitmap = (HBITMAP)SelectObject(memDC, audience);
 	for (int i = 0; i < 7; i++)
 	{
-		StretchBlt(backDC, g_nX + (i + 8) * 100, 100, 230, 300, memDC, 0, 0, 145, 245, SRCCOPY);
+		audience->Draw(backDC, g_nX + (i + 8) * 100, 100, 230, 300);
+		//StretchBlt(backDC, g_nX + (i + 8) * 100, 100, 230, 300, memDC, 0, 0, 145, 245, SRCCOPY);
 	}
-
-	oldBitmap = (HBITMAP)SelectObject(memDC, elephant);
-	StretchBlt(backDC, g_nX + (7 + 8) * 100, 100, 230, 300, memDC, 0, 0, 145, 245, SRCCOPY);
-
-	oldBitmap = (HBITMAP)SelectObject(memDC, grass);
-	StretchBlt(backDC, 0, 180, 1700, 510, memDC, 0, 0, 145, 245, SRCCOPY);
+	SelectObject(memDC, elephant);
+	//oldBitmap = (HBITMAP)SelectObject(memDC, elephant);
+	elephant->Draw(backDC, g_nX + (7 + 8) * 100, 100, 230, 300);
+	//StretchBlt(backDC, g_nX + (7 + 8) * 100, 100, 230, 300, memDC, 0, 0, 145, 245, SRCCOPY);
+	SelectObject(memDC, grass);
+	//oldBitmap = (HBITMAP)SelectObject(memDC, grass);
+	//StretchBlt(backDC, 0, 180, 1700, 510, memDC, 0, 0, 145, 245, SRCCOPY);
+	grass->Draw(backDC, 0, 180, 1700, 510);
 
 	SelectObject(memDC, oldBitmap);
 	DeleteDC(memDC);
@@ -72,6 +81,22 @@ void GameManager::Draw()
 	BitBlt(m_hdc, 0, 0, width, height, backDC, 0, 0, SRCCOPY);
 
 	DeleteObject(backBitmap);
+}
+
+HBITMAP GameManager::MyCreateDIBSection(HDC hdc, int w, int h)
+{
+	BITMAPINFO bm_info;
+	ZeroMemory(&bm_info.bmiHeader, sizeof(BITMAPINFOHEADER));
+
+	bm_info.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+
+	bm_info.bmiHeader.biBitCount = 24;
+	bm_info.bmiHeader.biWidth = w;
+	bm_info.bmiHeader.biHeight = h;
+	bm_info.bmiHeader.biPlanes = 1;
+
+	LPVOID pBits;
+	return CreateDIBSection(hdc, &bm_info, DIB_RGB_COLORS, (void**)&pBits, NULL, 0);
 }
 
 GameManager::~GameManager()

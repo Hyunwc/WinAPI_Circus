@@ -15,9 +15,10 @@ void BitMap::Init(HDC hdc, char* FileName)
 	m_Size.cy = BitMap_Info.bmHeight;
 }
 
-void BitMap::Draw(HDC hdc, int x, int y)
+void BitMap::Draw(HDC hdc, int x, int y, int w, int h)
 {
-	StretchBlt(hdc, x, y, 100, 150, MemDC, 0, 0, m_Size.cx, m_Size.cy, SRCCOPY);
+	//StretchBlt(hdc, x, y, w, h, MemDC, 0, 0, m_Size.cx, m_Size.cy, SRCCOPY);
+	StretchBlt(hdc, x, y, w, h, MemDC, 0, 0, 145, 245, SRCCOPY);
 }
 
 
