@@ -15,6 +15,14 @@ void BitMapManager::Init(HDC hdc)
 		sprintf_s(buf, "RES//back_%d.bmp", i);
 		m_back[i].Init(hdc, buf);
 	}
+	sprintf_s(buf, "RES//goal.bmp");
+	m_back->Init(hdc, buf);
+}
+
+void BitMapManager::InterfaceLoad(HDC hdc)
+{
+	//테스트 후 수정할 예정
+
 }
 
 BitMapManager::~BitMapManager()

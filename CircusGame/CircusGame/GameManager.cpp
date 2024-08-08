@@ -16,19 +16,25 @@ void GameManager::Init(HWND hWnd, HDC hdc)
 	backDC = CreateCompatibleDC(m_hdc);
 	BitMapManager::GetInstance()->Init(m_hdc);
 
-	audience = BitMapManager::GetInstance()->GetImage(IMAGE_AUDIENCE);
+	m_background.Init(m_hdc);
+	/*audience = BitMapManager::GetInstance()->GetImage(IMAGE_AUDIENCE);
 	elephant = BitMapManager::GetInstance()->GetImage(IMAGE_ELEPHANT);
-	grass = BitMapManager::GetInstance()->GetImage(IMAGE_GRASS);
+	grass = BitMapManager::GetInstance()->GetImage(IMAGE_GRASS);*/
 }
 
 void GameManager::Update(float deltaTime)
 {
-	g_nX -= 100 * deltaTime;
-
+	if (GetAsyncKeyState(VK_LEFT))
+	{
+		g_nX += 150 * deltaTime;
+	}
+	if (GetAsyncKeyState(VK_RIGHT))
+	{
+		g_nX -= 150 * deltaTime;
+	}
+	
 	//포지션이 -몇까지 도달시 800으로
 	if (g_nX <= -800) g_nX += 800;
-
-	InvalidateRect(m_hWnd, NULL, FALSE);
 }
 
 void GameManager::TestDraw()
@@ -41,42 +47,37 @@ void GameManager::TestDraw()
 void GameManager::Draw()
 {
 	HBITMAP backBitmap = CreateCompatibleBitmap(m_hdc, width, height);
-	//HBITMAP backBitmap = MyCreateDIBSection(m_hdc, width, height);
 	SelectObject(backDC, backBitmap);
 
-	HDC memDC = CreateCompatibleDC(m_hdc);
-	HBITMAP oldBitmap = (HBITMAP)SelectObject(memDC, audience);
+	m_background.Draw(backDC, g_nX);
+	//HDC memDC = CreateCompatibleDC(m_hdc);
+	//HBITMAP oldBitmap = (HBITMAP)SelectObject(memDC, audience);
 
-	//StretchBlt(backDC, g_nX + 1 * 100, 100, 230, 300, memDC, 0, 0, 145, 245, SRCCOPY);
-	//관객부터
-	for (int i = 0; i < 7; i++)
-	{
-		audience->Draw(backDC, g_nX + i * 100, 100, 230, 300);
-		//StretchBlt(backDC, g_nX + i * 100, 100, 230, 300, memDC, 0, 0, 145, 245, SRCCOPY);
-	}
-	SelectObject(memDC, elephant);
-	//코끼리로 변경
-	//oldBitmap = (HBITMAP)SelectObject(memDC, elephant);
-	//StretchBlt(backDC, g_nX + 7 * 100, 100, 230, 300, memDC, 0, 0, 145, 245, SRCCOPY);
-	elephant->Draw(backDC, g_nX + 7 * 100, 100, 230, 300);
-	SelectObject(memDC, audience);
-	//oldBitmap = (HBITMAP)SelectObject(memDC, audience);
-	for (int i = 0; i < 7; i++)
-	{
-		audience->Draw(backDC, g_nX + (i + 8) * 100, 100, 230, 300);
-		//StretchBlt(backDC, g_nX + (i + 8) * 100, 100, 230, 300, memDC, 0, 0, 145, 245, SRCCOPY);
-	}
-	SelectObject(memDC, elephant);
-	//oldBitmap = (HBITMAP)SelectObject(memDC, elephant);
-	elephant->Draw(backDC, g_nX + (7 + 8) * 100, 100, 230, 300);
-	//StretchBlt(backDC, g_nX + (7 + 8) * 100, 100, 230, 300, memDC, 0, 0, 145, 245, SRCCOPY);
-	SelectObject(memDC, grass);
-	//oldBitmap = (HBITMAP)SelectObject(memDC, grass);
-	//StretchBlt(backDC, 0, 180, 1700, 510, memDC, 0, 0, 145, 245, SRCCOPY);
-	grass->Draw(backDC, 0, 180, 1700, 510);
+	////m_background.Draw(backDC);
 
-	SelectObject(memDC, oldBitmap);
-	DeleteDC(memDC);
+	////관객부터
+	//for (int i = 0; i < 7; i++)
+	//{
+	//	audience->Draw(backDC, g_nX + i * 100, 100, 230, 300);
+	//}
+	//SelectObject(memDC, elephant);
+	////코끼리로 변경
+	//elephant->Draw(backDC, g_nX + 7 * 100, 100, 230, 300);
+	//SelectObject(memDC, audience);
+
+	//for (int i = 0; i < 7; i++)
+	//{
+	//	audience->Draw(backDC, g_nX + (i + 8) * 100, 100, 230, 300);
+	//}
+	//SelectObject(memDC, elephant);
+	//elephant->Draw(backDC, g_nX + (7 + 8) * 100, 100, 230, 300);
+
+	//SelectObject(memDC, grass);
+
+	//grass->Draw(backDC, 0, 180, 1700, 510);
+
+	//SelectObject(memDC, oldBitmap);
+	//DeleteDC(memDC);
 
 	BitBlt(m_hdc, 0, 0, width, height, backDC, 0, 0, SRCCOPY);
 

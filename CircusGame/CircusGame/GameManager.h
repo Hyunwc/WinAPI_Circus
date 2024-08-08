@@ -2,6 +2,7 @@
 
 #include "Mecro.h"
 #include "BitMapManager.h"
+#include "BackGround.h"
 
 class GameManager
 {
@@ -17,7 +18,10 @@ private:
 	BitMap* grass;
 	//RECT backRect;
 	float g_nX = 0;
-	GameManager(){}
+	bool isFinal;
+
+	BackGround m_background;
+	GameManager() : isFinal(false) {}
 public:
 	~GameManager();
 	static GameManager* Instance()
@@ -27,6 +31,7 @@ public:
 	}
 	static void Release()
 	{
+		BitMapManager::Release();
 		if (instance)
 		{
 			delete instance;

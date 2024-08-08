@@ -27,6 +27,7 @@ public:
 		}
 	}
 	void Init(HDC hdc);
+	void InterfaceLoad(HDC hdc);
 	BitMap* GetImage(IMAGE index) { return &m_back[index]; }
 
 	~BitMapManager();
