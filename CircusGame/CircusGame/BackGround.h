@@ -16,13 +16,13 @@ private:
 	wstring goalstr;
 	bool isScrollStopped;
 	float goalX;
+	float totalDistance;
 	LINE m_line;
 	//BitMap* goal;
 public:
 	BackGround();
 	void Init(HDC hdc);
 	void Draw(HDC hdc, float g_nX);
-	void SetIsScroll(bool isScroll) { isScrollStopped = isScroll; }
 	bool IsGoal();
 	LINE GetLine() { return m_line; }
 	~BackGround();

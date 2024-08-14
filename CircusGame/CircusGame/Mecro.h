@@ -23,6 +23,12 @@ enum IMAGE
 
 enum LINE
 {
-	RUNLINE = 1,
+	STARTLINE = 1,
+	RUNLINE,
 	ENDLINE
+};
+
+enum SPEED
+{
+
 };

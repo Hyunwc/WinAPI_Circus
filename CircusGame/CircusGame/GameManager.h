@@ -22,6 +22,7 @@ private:
 	bool isFinal;
 
 	float timer = 0;
+	float totalDistance = 0;
 
 	LINE m_line;
 
@@ -51,5 +52,4 @@ public:
 	void Draw();
 	void SetLine(LINE curLine) { m_line = curLine; }
 	LINE GetLine() { return m_line; }
-	HBITMAP MyCreateDIBSection(HDC hdc, int w, int h);
 };

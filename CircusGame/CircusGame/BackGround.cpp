@@ -1,5 +1,4 @@
 #include "BackGround.h"
-#include "GameManager.h"
 
 BackGround::BackGround()
 {
@@ -25,7 +24,8 @@ void BackGround::Draw(HDC hdc, float g_nX)
 	HDC memDC = CreateCompatibleDC(hdc);
 	HBITMAP oldBitmap = (HBITMAP)SelectObject(memDC, audience);
 
-	
+	wstring positionText = L"Back_X: " + to_wstring(g_nX);
+	TextOut(hdc, 0, 40, positionText.c_str(), positionText.length());
 	//m_background.Draw(backDC);
 	
 	//°ü°´ºÎÅÍ
@@ -52,18 +52,14 @@ void BackGround::Draw(HDC hdc, float g_nX)
 	TextOut(hdc, g_nX + 1350.0f, 500, goalstr.c_str(), goalstr.length());
 	
 	goalX = g_nX + 1350.0f;
-	/*if (g_nX + 1350.0f <= 600)
-	{
-		goalX = g_nX + 1350.0f;
-	}*/
-
+	
 	SelectObject(memDC, oldBitmap);
 	DeleteDC(memDC);
 }
 
 bool BackGround::IsGoal()
 {
-	if (goalX <= 600)
+	if (goalX <= 600.0f)
 	{
 		return true;
 	}
