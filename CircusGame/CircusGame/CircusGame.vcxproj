@@ -134,14 +134,17 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="Mecro.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BackGround.cpp" />
     <ClCompile Include="BitMap.cpp" />
     <ClCompile Include="BitMapManager.cpp" />
     <ClCompile Include="CircusGame.cpp" />
     <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="CircusGame.rc" />

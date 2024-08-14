@@ -14,12 +14,16 @@ private:
 	BitMap* elephant;
 	BitMap* grass;
 	wstring goalstr;
-	bool isFinal;
+	bool isScrollStopped;
+	float goalX;
+	LINE m_line;
 	//BitMap* goal;
 public:
 	BackGround();
 	void Init(HDC hdc);
 	void Draw(HDC hdc, float g_nX);
-	bool IsFinal() { return isFinal; }
+	void SetIsScroll(bool isScroll) { isScrollStopped = isScroll; }
+	bool IsGoal();
+	LINE GetLine() { return m_line; }
 	~BackGround();
 };

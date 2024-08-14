@@ -20,3 +20,9 @@ enum IMAGE
 
 	IMAGE_END
 };
+
+enum LINE
+{
+	RUNLINE = 1,
+	ENDLINE
+};

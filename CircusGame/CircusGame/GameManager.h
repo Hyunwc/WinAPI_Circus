@@ -3,6 +3,7 @@
 #include "Mecro.h"
 #include "BitMapManager.h"
 #include "BackGround.h"
+#include "Player.h"
 
 class GameManager
 {
@@ -20,7 +21,12 @@ private:
 	float g_nX = 0;
 	bool isFinal;
 
+	float timer = 0;
+
+	LINE m_line;
+
 	BackGround m_background;
+	Player m_player;
 	GameManager() : isFinal(false) {}
 public:
 	~GameManager();
@@ -43,5 +49,7 @@ public:
 	void Update(float deltaTime);
 	void TestDraw();
 	void Draw();
+	void SetLine(LINE curLine) { m_line = curLine; }
+	LINE GetLine() { return m_line; }
 	HBITMAP MyCreateDIBSection(HDC hdc, int w, int h);
 };

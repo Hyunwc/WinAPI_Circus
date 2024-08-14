@@ -1,2 +1,21 @@
-﻿  BitMap.cpp
+﻿  BackGround.cpp
+C:\WinAPI_Circus\CircusGame\CircusGame\BackGround.cpp(34,28): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\WinAPI_Circus\CircusGame\CircusGame\BackGround.cpp(38,27): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\WinAPI_Circus\CircusGame\CircusGame\BackGround.cpp(43,28): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\WinAPI_Circus\CircusGame\CircusGame\BackGround.cpp(46,27): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\WinAPI_Circus\CircusGame\CircusGame\BackGround.cpp(52,69): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\WinAPI_Circus\CircusGame\CircusGame\BackGround.cpp(52,20): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  CircusGame.cpp
+C:\WinAPI_Circus\CircusGame\CircusGame\CircusGame.cpp(62,16): warning C4244: 'initializing': conversion from 'ULONGLONG' to 'INT', possible loss of data
+C:\WinAPI_Circus\CircusGame\CircusGame\CircusGame.cpp(179,34): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\WinAPI_Circus\CircusGame\CircusGame\CircusGame.cpp(182,30): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\WinAPI_Circus\CircusGame\CircusGame\CircusGame.cpp(187,34): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\WinAPI_Circus\CircusGame\CircusGame\CircusGame.cpp(190,30): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  GameManager.cpp
+  Player.cpp
+C:\WinAPI_Circus\CircusGame\CircusGame\Player.cpp(22,58): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\WinAPI_Circus\CircusGame\CircusGame\Player.cpp(24,66): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\WinAPI_Circus\CircusGame\CircusGame\Player.cpp(39,13): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+C:\WinAPI_Circus\CircusGame\CircusGame\Player.cpp(43,13): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+  Generating Code...
   CircusGame.vcxproj -> C:\WinAPI_Circus\CircusGame\x64\Debug\CircusGame.exe

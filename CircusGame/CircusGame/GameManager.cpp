@@ -1,4 +1,5 @@
 #include "GameManager.h"
+#include <iostream>
 
 GameManager* GameManager::instance = nullptr;
 
@@ -16,7 +17,9 @@ void GameManager::Init(HWND hWnd, HDC hdc)
 	backDC = CreateCompatibleDC(m_hdc);
 	BitMapManager::GetInstance()->Init(m_hdc);
 
+	m_line = RUNLINE;
 	m_background.Init(m_hdc);
+	m_player.Init();
 	/*audience = BitMapManager::GetInstance()->GetImage(IMAGE_AUDIENCE);
 	elephant = BitMapManager::GetInstance()->GetImage(IMAGE_ELEPHANT);
 	grass = BitMapManager::GetInstance()->GetImage(IMAGE_GRASS);*/
@@ -24,17 +27,43 @@ void GameManager::Init(HWND hWnd, HDC hdc)
 
 void GameManager::Update(float deltaTime)
 {
-	if (GetAsyncKeyState(VK_LEFT))
+	/*timer += deltaTime;
+	TextOutA(m_hdc, 0, 0, std::to_string(timer).c_str(), std::to_string(timer).length());*/
+
+	//m_line = m_background.GetLine();
+
+	//RUNLINE이 배경스크롤이 되어야함.
+	if (m_line == RUNLINE) //골인라인 도착 전
 	{
-		g_nX += 150 * deltaTime;
+		if (GetAsyncKeyState(VK_LEFT))
+		{
+			g_nX += 150 * deltaTime;
+		}
+		if (GetAsyncKeyState(VK_RIGHT))
+		{
+			g_nX -= 150 * deltaTime;
+		}
+
+		//포지션이 -몇까지 도달시 800으로
+		if (g_nX <= -800) g_nX += 800;
+
+		//백그라운드의 골대쪽 도달시 EndLine으로 
+		if (m_background.IsGoal())
+		{
+			SetLine(ENDLINE);
+		}
 	}
-	if (GetAsyncKeyState(VK_RIGHT))
+	else if (m_line == ENDLINE)
 	{
-		g_nX -= 150 * deltaTime;
+		m_player.Update(deltaTime);
+
+		//플레이어의 포지션이 50이하가 될시 RunLine으로
+		if (m_player.GetPosX() <= 50)
+		{
+			SetLine(RUNLINE);
+			m_player.SetPosX();
+		}
 	}
-	
-	//포지션이 -몇까지 도달시 800으로
-	if (g_nX <= -800) g_nX += 800;
 }
 
 void GameManager::TestDraw()
@@ -50,35 +79,8 @@ void GameManager::Draw()
 	SelectObject(backDC, backBitmap);
 
 	m_background.Draw(backDC, g_nX);
-	//HDC memDC = CreateCompatibleDC(m_hdc);
-	//HBITMAP oldBitmap = (HBITMAP)SelectObject(memDC, audience);
 
-	////m_background.Draw(backDC);
-
-	////관객부터
-	//for (int i = 0; i < 7; i++)
-	//{
-	//	audience->Draw(backDC, g_nX + i * 100, 100, 230, 300);
-	//}
-	//SelectObject(memDC, elephant);
-	////코끼리로 변경
-	//elephant->Draw(backDC, g_nX + 7 * 100, 100, 230, 300);
-	//SelectObject(memDC, audience);
-
-	//for (int i = 0; i < 7; i++)
-	//{
-	//	audience->Draw(backDC, g_nX + (i + 8) * 100, 100, 230, 300);
-	//}
-	//SelectObject(memDC, elephant);
-	//elephant->Draw(backDC, g_nX + (7 + 8) * 100, 100, 230, 300);
-
-	//SelectObject(memDC, grass);
-
-	//grass->Draw(backDC, 0, 180, 1700, 510);
-
-	//SelectObject(memDC, oldBitmap);
-	//DeleteDC(memDC);
-
+	m_player.Draw(backDC);
 	BitBlt(m_hdc, 0, 0, width, height, backDC, 0, 0, SRCCOPY);
 
 	DeleteObject(backBitmap);
