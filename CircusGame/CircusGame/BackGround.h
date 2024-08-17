@@ -15,15 +15,21 @@ private:
 	BitMap* grass;
 	wstring goalstr;
 	bool isScrollStopped;
+	float g_nX; //백그라운드의 x좌표
+	float speed; //스크롤 속도
 	float goalX;
-	float totalDistance;
+	float totalDistance; 
+	float scrollError;
 	LINE m_line;
 	//BitMap* goal;
 public:
 	BackGround();
 	void Init(HDC hdc);
-	void Draw(HDC hdc, float g_nX);
+	void Draw(HDC hdc);
+	void Update(float deltaTime);
+	void Render(HDC hdc);
 	bool IsGoal();
+	bool IsStartLine();
 	LINE GetLine() { return m_line; }
 	~BackGround();
 };

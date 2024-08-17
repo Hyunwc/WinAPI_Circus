@@ -4,6 +4,8 @@
 #include <vector>
 #include <Windows.h>
 #include <string>
+#include <cmath>
+#include <algorithm>
 
 #pragma comment(lib, "msimg32.lib")
 

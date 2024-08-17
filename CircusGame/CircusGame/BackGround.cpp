@@ -1,6 +1,6 @@
 #include "BackGround.h"
 
-BackGround::BackGround()
+BackGround::BackGround() : g_nX(0), speed(150.0f), goalX(0)
 {
 	isScrollStopped = false;
 }
@@ -12,11 +12,11 @@ void BackGround::Init(HDC hdc)
 	audience = BitMapManager::GetInstance()->GetImage(IMAGE_AUDIENCE);
 	elephant = BitMapManager::GetInstance()->GetImage(IMAGE_ELEPHANT);
 	grass = BitMapManager::GetInstance()->GetImage(IMAGE_GRASS);
-	m_line = RUNLINE;
+	
 	//goal = BitMapManager::GetInstance()->GetImage(IMAGE_GRASS);
 }
 
-void BackGround::Draw(HDC hdc, float g_nX)
+void BackGround::Draw(HDC hdc)
 {
 	//true일시 스크롤 멈춤
 	//if (isScrollStopped) g_nX = 0;
@@ -50,20 +50,53 @@ void BackGround::Draw(HDC hdc, float g_nX)
 	grass->Draw(hdc, 0, 180, 1700, 510);
 	//실험용 골인지점 텍스트
 	TextOut(hdc, g_nX + 1350.0f, 500, goalstr.c_str(), goalstr.length());
-	
-	goalX = g_nX + 1350.0f;
-	
+
 	SelectObject(memDC, oldBitmap);
 	DeleteDC(memDC);
 }
 
+void BackGround::Update(float deltaTime)
+{
+	if (!isScrollStopped)
+	{
+		if (GetAsyncKeyState(VK_LEFT))
+		{
+			g_nX += speed * deltaTime;
+			totalDistance -= speed * deltaTime;
+		}
+		if (GetAsyncKeyState(VK_RIGHT))
+		{
+			g_nX -= speed * deltaTime;
+			totalDistance += speed * deltaTime;
+		}
+		
+		
+		//포지션이 -800 이하로 도달하면 800을 더해 스크롤 반복
+		if (g_nX <= -800.0f) g_nX += 800.0f;
+
+	
+		
+		/*g_nX = std::round(g_nX);
+		totalDistance = std::round(totalDistance);*/
+
+		goalX = g_nX + 1350.0f;
+	}
+	
+
+}
+
+void BackGround::Render(HDC hdc)
+{
+}
+
 bool BackGround::IsGoal()
 {
-	if (goalX <= 600.0f)
-	{
-		return true;
-	}
-	return false;
+	return (goalX <= 600.0f);
+}
+
+bool BackGround::IsStartLine()
+{
+	return (totalDistance <= 50.0f);
 }
 
 

@@ -5,6 +5,7 @@
 #include "BackGround.h"
 #include "Player.h"
 
+
 class GameManager
 {
 private:
@@ -50,6 +51,7 @@ public:
 	void Update(float deltaTime);
 	void TestDraw();
 	void Draw();
+	void Render();
 	void SetLine(LINE curLine) { m_line = curLine; }
 	LINE GetLine() { return m_line; }
 };

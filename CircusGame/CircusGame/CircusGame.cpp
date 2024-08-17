@@ -85,6 +85,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             if (checkTime <= currentTime) //0.03초마다 업데이트
             {
                 float deltaTime = (currentTime - checkTime + invFPS) * 0.001f;
+                
                 checkTime += invFPS;
 
                 GameManager::Instance()->Update(deltaTime);
