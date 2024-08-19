@@ -1,7 +1,8 @@
 #include "BackGround.h"
 
-BackGround::BackGround() : g_nX(0), speed(150.0f), goalX(0)
+BackGround::BackGround() : g_nX(0.0f), goalX(0.0f)
 {
+	m_speed = NORMAL;
 	isScrollStopped = false;
 }
 
@@ -61,28 +62,34 @@ void BackGround::Update(float deltaTime)
 	{
 		if (GetAsyncKeyState(VK_LEFT))
 		{
-			g_nX += speed * deltaTime;
-			totalDistance -= speed * deltaTime;
+			g_nX += m_speed * deltaTime;
+			totalDistance -= m_speed * deltaTime;
+
+			//엔드라인에서 왼쪽으로 이동할때
+			/*if (IsGoal())
+			{
+				g_nX = -750.0f;
+			}*/
+			
 		}
 		if (GetAsyncKeyState(VK_RIGHT))
 		{
-			g_nX -= speed * deltaTime;
-			totalDistance += speed * deltaTime;
+			g_nX -= m_speed * deltaTime;
+			totalDistance += m_speed * deltaTime;
 		}
+
 		
 		
 		//포지션이 -800 이하로 도달하면 800을 더해 스크롤 반복
 		if (g_nX <= -800.0f) g_nX += 800.0f;
 
-	
-		
-		/*g_nX = std::round(g_nX);
-		totalDistance = std::round(totalDistance);*/
-
 		goalX = g_nX + 1350.0f;
 	}
-	
 
+	if (IsGoal())
+	{
+		g_nX = -750.0f;  // 특정 위치로 초기화
+	}
 }
 
 void BackGround::Render(HDC hdc)
@@ -91,6 +98,7 @@ void BackGround::Render(HDC hdc)
 
 bool BackGround::IsGoal()
 {
+	//g_nX = -750.0f;
 	return (goalX <= 600.0f);
 }
 

@@ -32,5 +32,7 @@ enum LINE
 
 enum SPEED
 {
-
+	SLOW = 100,
+	NORMAL = 150,
+	HIGH = 200
 };

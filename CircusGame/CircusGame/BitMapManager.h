@@ -6,7 +6,7 @@ class BitMapManager
 private:
 	static BitMapManager* m_hThis;
 	BitMap* m_back;
-	//vector<BitMap> m_back;
+	vector<BitMap*> m_imglist;
 
 	BitMapManager();
 public:

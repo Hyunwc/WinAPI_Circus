@@ -4,6 +4,7 @@ Player::Player()
 {
 	posX = 50.0f;
 	posY = 500.0f;
+	m_speed = NORMAL;
 	isJumping = false;
 }
 
@@ -37,11 +38,11 @@ void Player::Update(float deltaTime)
 	//속도값 상수로 계산한거 나중에 수정
 	if (GetAsyncKeyState(VK_LEFT))
 	{
-		posX -= 150 * deltaTime;
+		posX -= m_speed * deltaTime;
 	}
 	if (GetAsyncKeyState(VK_RIGHT))
 	{
-		posX += 150 * deltaTime;
+		posX += m_speed * deltaTime;
 	}
 	//x 제한 0~600
 	//if (x < 0) x = 0;

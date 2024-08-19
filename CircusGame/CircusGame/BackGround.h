@@ -16,10 +16,9 @@ private:
 	wstring goalstr;
 	bool isScrollStopped;
 	float g_nX; //백그라운드의 x좌표
-	float speed; //스크롤 속도
 	float goalX;
 	float totalDistance; 
-	float scrollError;
+	SPEED m_speed;
 	LINE m_line;
 	//BitMap* goal;
 public:
