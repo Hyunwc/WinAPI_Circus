@@ -58,39 +58,26 @@ void BackGround::Draw(HDC hdc)
 
 void BackGround::Update(float deltaTime)
 {
-	if (!isScrollStopped)
+	if (GetAsyncKeyState(VK_LEFT))
 	{
-		if (GetAsyncKeyState(VK_LEFT))
-		{
-			g_nX += m_speed * deltaTime;
-			totalDistance -= m_speed * deltaTime;
-
-			//엔드라인에서 왼쪽으로 이동할때
-			/*if (IsGoal())
-			{
-				g_nX = -750.0f;
-			}*/
-			
-		}
-		if (GetAsyncKeyState(VK_RIGHT))
-		{
-			g_nX -= m_speed * deltaTime;
-			totalDistance += m_speed * deltaTime;
-		}
-
-		
-		
-		//포지션이 -800 이하로 도달하면 800을 더해 스크롤 반복
-		if (g_nX <= -800.0f) g_nX += 800.0f;
-
-		goalX = g_nX + 1350.0f;
+		g_nX += m_speed * deltaTime;
+		totalDistance -= m_speed * deltaTime;
+	}
+	if (GetAsyncKeyState(VK_RIGHT))
+	{
+		g_nX -= m_speed * deltaTime;
+		totalDistance += m_speed * deltaTime;
 	}
 
-	if (IsGoal())
-	{
-		g_nX = -750.0f;  // 특정 위치로 초기화
-	}
+	//포지션이 -800 이하로 도달하면 800을 더해 스크롤 반복
+	if (g_nX <= -800.0f) g_nX += 800.0f;
+
+	goalX = g_nX + 1350.0f;
+
+	if (IsGoal()) g_nX = -750.0f;  // 특정 위치로 초기화
+	else if (IsStartLine()) g_nX = 0.0f;
 }
+
 
 void BackGround::Render(HDC hdc)
 {
