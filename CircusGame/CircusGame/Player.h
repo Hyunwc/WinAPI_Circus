@@ -12,6 +12,7 @@ private:
 	int initX; //초기 x위치
 	bool isJumping; //점프중인지?
 	SPEED m_speed;
+	BitMap* player;
 public:
 	Player();
 	void Init();

@@ -10,6 +10,7 @@ Player::Player()
 
 void Player::Init()
 {
+	player = BitMapManager::GetInstance()->GetImage(PLAYER_MOVE1);
 	playerstr = L"¿ô";
 	initX = posX;
 }
@@ -20,7 +21,8 @@ void Player::Draw(HDC hdc)
 	//HBITMAP oldBitmap = (HBITMAP)SelectObject(memDC);
 	//½ºÅ©·ÑÀÌ ¸ØÃèÀ»¶§ ÇÃ·¹ÀÌ¾îÀÇ xÁÂÇ¥°¡ ++, --µÇ¾î¾ßÇÔ.
 	//
-	TextOut(hdc, posX, posY, playerstr.c_str(), playerstr.length());
+	player->Draw(hdc, posX, posY, 125, 125);
+	//TextOut(hdc, posX, posY, playerstr.c_str(), playerstr.length());
 	wstring positionText = L"Player X: " + to_wstring(posX);
 	//TextOut(hdc, 10, 10, positionText.c_str(), positionText.length());
 	TextOut(hdc, 0, 10, positionText.c_str(), positionText.length());

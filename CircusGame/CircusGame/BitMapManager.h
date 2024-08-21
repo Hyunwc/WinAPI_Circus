@@ -7,7 +7,7 @@ private:
 	static BitMapManager* m_hThis;
 	BitMap* m_back;
 	vector<BitMap*> m_imglist;
-
+	char buf[256];
 	BitMapManager();
 public:
 	static BitMapManager* GetInstance()
@@ -27,8 +27,11 @@ public:
 		}
 	}
 	void Init(HDC hdc);
-	void InterfaceLoad(HDC hdc);
-	BitMap* GetImage(IMAGE index) { return &m_back[index]; }
+	void BackLoad(HDC hdc);
+	void PlayerLoad(HDC hdc);
+	void FireLoad(HDC hdc);
+	void EtcLoad(HDC hdc);
+	BitMap* GetImage(IMG index) { return &m_back[index]; }
 
 	~BitMapManager();
 };

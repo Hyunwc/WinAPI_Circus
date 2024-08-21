@@ -10,9 +10,9 @@ void BackGround::Init(HDC hdc)
 {
 	dc = hdc;
 	goalstr = L"Goal!";
-	audience = BitMapManager::GetInstance()->GetImage(IMAGE_AUDIENCE);
-	elephant = BitMapManager::GetInstance()->GetImage(IMAGE_ELEPHANT);
-	grass = BitMapManager::GetInstance()->GetImage(IMAGE_GRASS);
+	audience = BitMapManager::GetInstance()->GetImage(BACK_AUDIENCE0);
+	elephant = BitMapManager::GetInstance()->GetImage(BACK_ELEPHANT);
+	grass = BitMapManager::GetInstance()->GetImage(BACK_GRASS);
 	
 	//goal = BitMapManager::GetInstance()->GetImage(IMAGE_GRASS);
 }
