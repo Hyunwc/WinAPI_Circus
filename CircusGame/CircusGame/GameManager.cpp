@@ -21,59 +21,30 @@ void GameManager::Init(HWND hWnd, HDC hdc)
 	m_line = RUNLINE;
 	m_background.Init(m_hdc);
 	m_player.Init();
+	
+	m_background.SetState(RUNLINE);
+	m_player.SetState(RUNLINE); 
 }
 
 void GameManager::Update(float deltaTime)
 {
-	/*timer += deltaTime;
-	TextOutA(m_hdc, 0, 0, std::to_string(timer).c_str(), std::to_string(timer).length());*/
-
-	//RUNLINE이 배경스크롤이 되어야함.
-
-	//deltaTime = std::clamp(deltaTime, 0.01f, 0.1f);
-	
-	if (m_line == STARTLINE)
+	//골대가 나타났을때
+	if (m_background.IsGoal())
 	{
-		if (GetAsyncKeyState(VK_RIGHT))
-		{
-			m_background.Update(deltaTime);
-		}
-
-		if (!m_background.IsStartLine())
-		{
-			SetLine(RUNLINE);
-		}
+		m_player.SetState(ENDLINE); //이상태일때 좌우로 이동이 가능하게
+		m_background.SetState(ENDLINE); //이상태일때 스크롤이 중단되게
 	}
-	else if (m_line == RUNLINE) //골인라인 도착 전
+	//플레이어의 포지션이 50보다 낮으면
+	//포지션 50으로 초기화.좌우이동 중지, 
+	if (m_player.GetPosX() < 50.0f)
 	{
-		m_background.Update(deltaTime);
-		
-		//골대에 도달 시 ENDLINE으로 전환
-		if (m_background.IsGoal())
-		{
-			SetLine(ENDLINE);
-		}
-
-		//TextOutA(m_hdc, 0, 20, std::to_string(totalDistance).c_str(), std::to_string(totalDistance).length());
-
-
-		if (m_background.IsStartLine())
-		{
-			SetLine(STARTLINE);
-		}
+		m_player.SetPosX(); //플레이어포지션 50.0으로
+		m_player.SetState(RUNLINE); //플레이어 좌우 이동 중지
+		m_background.SetState(RUNLINE); //스크롤 다시 시작.
 	}
-	else if (m_line == ENDLINE)
-	{
-		//ENDLINE시 플레이어는 좌표 변경 가능
-		m_player.Update(deltaTime);
 
-		//플레이어의 포지션이 50이하가 될시 RunLine으로
-		if (m_player.GetPosX() <= 50)
-		{
-			SetLine(RUNLINE);
-			m_player.SetPosX();
-		}
-	}
+	m_player.Update(deltaTime);
+	m_background.Update(deltaTime);
 }
 
 void GameManager::TestDraw()
@@ -88,10 +59,9 @@ void GameManager::Draw()
 	HBITMAP backBitmap = CreateCompatibleBitmap(m_hdc, width, height);
 	SelectObject(backDC, backBitmap);
 
-
 	m_background.Draw(backDC);
-
 	m_player.Draw(backDC);
+
 	BitBlt(m_hdc, 0, 0, width, height, backDC, 0, 0, SRCCOPY);
 
 	DeleteObject(backBitmap);

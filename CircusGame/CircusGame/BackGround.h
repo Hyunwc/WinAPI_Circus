@@ -29,6 +29,7 @@ public:
 	void Render(HDC hdc);
 	bool IsGoal();
 	bool IsStartLine();
+	void SetState(LINE state) { m_line = state; }
 	LINE GetLine() { return m_line; }
 	~BackGround();
 };

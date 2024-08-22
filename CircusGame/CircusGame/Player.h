@@ -12,6 +12,7 @@ private:
 	int initX; //초기 x위치
 	bool isJumping; //점프중인지?
 	SPEED m_speed;
+	LINE m_line;
 	BitMap* player;
 public:
 	Player();
@@ -20,6 +21,7 @@ public:
 	void Jump();
 	void Update(float deltaTime);
 	float GetPosX() { return posX; }
+	void SetState(LINE state) { m_line = state; }
 	void SetPosX() { posX = initX; }
 	~Player();
 };

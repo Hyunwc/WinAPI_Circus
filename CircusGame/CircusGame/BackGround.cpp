@@ -13,7 +13,7 @@ void BackGround::Init(HDC hdc)
 	audience = BitMapManager::GetInstance()->GetImage(BACK_AUDIENCE0);
 	elephant = BitMapManager::GetInstance()->GetImage(BACK_ELEPHANT);
 	grass = BitMapManager::GetInstance()->GetImage(BACK_GRASS);
-	
+	m_line = RUNLINE;
 	//goal = BitMapManager::GetInstance()->GetImage(IMAGE_GRASS);
 }
 
@@ -58,24 +58,31 @@ void BackGround::Draw(HDC hdc)
 
 void BackGround::Update(float deltaTime)
 {
-	if (GetAsyncKeyState(VK_LEFT))
+	//런라인 일때 스크롤
+	if (m_line == RUNLINE)
 	{
-		g_nX += m_speed * deltaTime;
-		totalDistance -= m_speed * deltaTime;
+		if (GetAsyncKeyState(VK_LEFT))
+		{
+			g_nX += m_speed * deltaTime;
+			totalDistance -= m_speed * deltaTime;
+		}
+		if (GetAsyncKeyState(VK_RIGHT))
+		{
+			g_nX -= m_speed * deltaTime;
+			totalDistance += m_speed * deltaTime;
+		}
+
+		//포지션이 -800 이하로 도달하면 800을 더해 스크롤 반복
+		if (g_nX <= -800.0f) g_nX += 800.0f;
+
+		//골대 포지션 업데이트
+		goalX = g_nX + 1350.0f;
+
+		if (IsGoal()) g_nX = -750.0f;  // 특정 위치로 초기화
+		else if (IsStartLine()) g_nX = 0.0f;
 	}
-	if (GetAsyncKeyState(VK_RIGHT))
-	{
-		g_nX -= m_speed * deltaTime;
-		totalDistance += m_speed * deltaTime;
-	}
 
-	//포지션이 -800 이하로 도달하면 800을 더해 스크롤 반복
-	if (g_nX <= -800.0f) g_nX += 800.0f;
-
-	goalX = g_nX + 1350.0f;
-
-	if (IsGoal()) g_nX = -750.0f;  // 특정 위치로 초기화
-	else if (IsStartLine()) g_nX = 0.0f;
+	
 }
 
 
